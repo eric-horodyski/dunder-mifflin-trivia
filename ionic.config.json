@@ -1,0 +1,7 @@
+{
+  "name": "dunder-mifflin-trivia",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
