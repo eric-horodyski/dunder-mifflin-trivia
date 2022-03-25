@@ -1,16 +1,16 @@
 /* eslint-disable no-underscore-dangle */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Character } from '../core/models';
 import { environment } from '@env/environment';
-import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CharacterService {
   characters: Character[] = [];
-  private endpoint = `${environment.apiBaseUrl}/characters`; // v1/quote for random quote
+  private endpoint = `${environment.apiBaseUrl}/characters`;
 
   constructor(private http: HttpClient) {}
 
@@ -18,10 +18,6 @@ export class CharacterService {
     return this.http.get<{ data: Character[] }>(this.endpoint).pipe(
       map(({ data }) => {
         this.characters = data;
-      }),
-      catchError((err, caught) => {
-        console.log(err);
-        return caught;
       })
     );
   }

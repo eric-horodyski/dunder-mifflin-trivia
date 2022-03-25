@@ -1,6 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import { Component, OnInit } from '@angular/core';
-import { Character } from '../core/models';
+import { Character, TriviaQuestion } from '../core/models';
+import { SettingsService } from '../core/settings.service';
 import { CharacterService } from './character.service';
+import { TriviaQuestionService } from './trivia-question.service';
+
+type QuestionState = 'Playing' | 'Correct' | 'Incorrect';
 
 @Component({
   selector: 'app-trivia',
@@ -8,16 +13,44 @@ import { CharacterService } from './character.service';
   styleUrls: ['./trivia.page.scss'],
 })
 export class TriviaPage implements OnInit {
-  characters: Character[] = [];
+  triviaQuestion: TriviaQuestion;
+  loading = true;
+  state: QuestionState = 'Playing';
+  selectedOption = -1;
 
-  constructor(private trivia: CharacterService) {}
+  constructor(
+    private character: CharacterService,
+    private trivia: TriviaQuestionService,
+    private settings: SettingsService
+  ) {}
 
-  ngOnInit() {
-    this.trivia.loadCharacters().subscribe(() => {
-      this.characters = this.trivia.characters;
-      console.log(this.characters[0]);
-      const options = this.trivia.generateOptions(this.characters[0]);
-      console.log(options);
+  async ngOnInit() {
+    await this.settings.loadScore();
+    this.loading = true;
+    this.character.loadCharacters().subscribe(() => this.loadTriviaQuestion());
+  }
+
+  loadTriviaQuestion() {
+    this.selectedOption = -1;
+    this.state = 'Playing';
+    this.loading = true;
+    this.trivia.getTriviaQuestion().subscribe((question) => {
+      this.triviaQuestion = question;
+      this.loading = false;
     });
+  }
+
+  async selectAnswer(character: Character, idx: number) {
+    this.selectedOption = idx;
+    if (this.isCorrectAnswer(character)) {
+      this.state = 'Correct';
+      await this.settings.incrementScore();
+    } else {
+      this.state = 'Incorrect';
+    }
+  }
+
+  isCorrectAnswer(character: Character) {
+    return this.triviaQuestion.answer._id === character._id;
   }
 }
