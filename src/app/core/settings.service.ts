@@ -20,4 +20,9 @@ export class SettingsService {
     this.score++;
     await Storage.set({ key: this.scoreKey, value: this.score.toString() });
   }
+
+  async clearScore(): Promise<void> {
+    await Storage.set({ key: this.scoreKey, value: '0' });
+    this.score = 0;
+  }
 }
