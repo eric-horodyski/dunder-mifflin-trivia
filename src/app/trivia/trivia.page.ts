@@ -25,6 +25,7 @@ export class TriviaPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    //test comment
     await this.settings.loadScore();
     this.loading = true;
     this.character.loadCharacters().subscribe(() => this.loadTriviaQuestion());
