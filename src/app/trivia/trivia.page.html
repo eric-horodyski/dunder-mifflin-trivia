@@ -1,43 +1,38 @@
-<ion-content>
-  <div *ngIf="loading" class="loading">
-    <img src="./assets/prison-mike-the-office.gif" />
-    <h1>
-      Loading...
-    </h1>
+<ion-content [fullscreen]="true" class="trivia">
+  <div class="center-container">
+    <ion-card *ngIf="!loading" class="trvia-question">
+      <ion-card-header>
+        <ion-card-subtitle>Who said this?</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{triviaQuestion.quote}}
+      </ion-card-content>
+      <ion-list>
+        <ion-item button detail="false"
+          *ngFor="let character of triviaQuestion.options; let idx = index; let last = last"
+          (click)="selectAnswer(character, idx)" [color]="selectedOption === idx ? 'light' : null"
+          [disabled]="state !== 'Playing'" [lines]="last ? 'none' : null">
+          <ion-label>{{character.firstname}} {{character.lastname}}</ion-label>
+          <ion-icon slot="end" [name]="isCorrectAnswer(character) ? 'checkmark-circle-outline' : 'close-circle-outline'"
+            [color]="isCorrectAnswer(character) ? 'success' : 'danger'" *ngIf="state !== 'Playing'"></ion-icon>
+        </ion-item>
+      </ion-list>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-label class="ion-padding-horizontal">Score: <strong>{{settings.score}}</strong></ion-label>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="loadTriviaQuestion()" color="primary">
+            New Question
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-card>
+    <ion-card *ngIf="loading" class="loading">
+      <img src="./assets/prison-mike-the-office.gif" />
+      <ion-card-header>
+        <ion-card-title>Loading...</ion-card-title>
+      </ion-card-header>
+    </ion-card>
   </div>
-  <ion-card class="center-container" *ngIf="triviaQuestion">
-    <img src="./assets/dunder-mifflin-logo.png" />
-    <ion-card-header>
-      <ion-card-subtitle>Who said this?</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      {{triviaQuestion.quote}}
-    </ion-card-content>
-    <ion-list>
-      <ion-item button detail="false" 
-        *ngFor="let character of triviaQuestion.options; let idx = index"
-        (click)="selectAnswer(character, idx)"
-        [color]="selectedOption === idx ? 'light' : null"
-        [disabled]="state !== 'Playing'">
-        <ion-label>{{character.firstname}} {{character.lastname}}</ion-label>
-        <ion-icon slot="end" 
-          [name]="isCorrectAnswer(character) ? 'checkmark-circle-outline' : 'close-circle-outline'"
-          [color]="isCorrectAnswer(character) ? 'success' : 'danger'"
-          *ngIf="state !== 'Playing'"></ion-icon>
-      </ion-item>
-    </ion-list>
-   
-  </ion-card>
 </ion-content>
-<ion-footer>
-  <ion-toolbar color="secondary">
-    <ion-buttons slot="end">
-      <ion-label class="ion-padding-horizontal">Score: <strong>{{settings.score}}</strong></ion-label>
-    </ion-buttons>
-    <ion-buttons slot="start">
-      <ion-button (click)="loadTriviaQuestion()" color="light">
-        New Question
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
