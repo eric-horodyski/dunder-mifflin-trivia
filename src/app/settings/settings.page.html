@@ -11,9 +11,11 @@
     </ion-toolbar>
   </ion-header>
   <ion-list>
-    <ion-item>
-      <ion-button (click)="clearScore()">Clear Score</ion-button>
-    </ion-item>
+      <ion-item>
+        <ion-label>Remember Me</ion-label>
+        <ion-toggle></ion-toggle>
+      </ion-item>
+      <ion-button (click)="clearScore()" expand="block">Clear Score</ion-button>
   </ion-list>
 
 </ion-content>
