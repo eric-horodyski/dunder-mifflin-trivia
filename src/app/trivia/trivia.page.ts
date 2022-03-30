@@ -36,7 +36,9 @@ export class TriviaPage implements OnInit {
     this.loading = true;
     this.trivia.getTriviaQuestion().subscribe((question) => {
       this.triviaQuestion = question;
-      this.loading = false;
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
     });
   }
 
