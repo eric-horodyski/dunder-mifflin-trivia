@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package me.horodyski.dmt;
 
 import com.getcapacitor.BridgeActivity;
 

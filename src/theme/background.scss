@@ -1,0 +1,40 @@
+.background {
+  --background: linear-gradient(
+    135deg,
+    var(--ion-color-primary) 0%,
+    var(--ion-color-secondary) 100%
+  );
+  .center-container {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    &:before,
+    &:after {
+      overflow: hidden;
+      display: block;
+      content: "";
+      background: var(--ion-color-secondary);
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    &:before {
+      top: -100px;
+      left: -150px;
+    }
+    &:after {
+      bottom: 0;
+      right: -150px;
+      background: var(--ion-color-primary);
+      z-index: -100;
+    }
+  }
+  ion-card {
+    flex: 1;
+  }
+}

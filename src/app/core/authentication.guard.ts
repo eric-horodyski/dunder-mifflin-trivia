@@ -1,27 +1,24 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { CanActivate } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationGuard implements CanActivate {
-  constructor(private nav: NavController) {}
+  constructor(
+    private auth: AuthenticationService,
+    private nav: NavController
+  ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return true;
+  async canActivate(): Promise<boolean> {
+    const isAuthenticated = await this.auth.isAuthenticated();
+    if (isAuthenticated) {
+      return true;
+    } else {
+      this.nav.navigateRoot(['/login']);
+      return false;
+    }
   }
 }

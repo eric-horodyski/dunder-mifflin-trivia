@@ -1,5 +1,5 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "me.horodyski.dmt",
 	"appName": "dunder-mifflin-trivia",
 	"webDir": "www",
 	"bundledWebRuntime": false

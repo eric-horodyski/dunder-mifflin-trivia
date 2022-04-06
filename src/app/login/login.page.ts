@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { AuthenticationService } from '../core/authentication.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
+  constructor(
+    private auth: AuthenticationService,
+    private nav: NavController
+  ) {}
 
-  constructor() { }
-
-  ngOnInit() {
+  async login() {
+    await this.auth.login();
+    this.nav.navigateRoot(['/tabs']);
   }
-
 }
