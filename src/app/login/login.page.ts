@@ -8,6 +8,8 @@ import { AuthenticationService } from '../core/authentication.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
+  rememberMe = false;
+
   constructor(
     private auth: AuthenticationService,
     private nav: NavController

@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { Component, OnInit } from '@angular/core';
 import { Character, TriviaQuestion } from '../core/models';
-import { SettingsService } from '../core/settings.service';
+import { ScoreService } from '../core/score.service';
 import { CharacterService } from './character.service';
 import { TriviaQuestionService } from './trivia-question.service';
 
@@ -21,11 +21,11 @@ export class TriviaPage implements OnInit {
   constructor(
     private character: CharacterService,
     private trivia: TriviaQuestionService,
-    private settings: SettingsService
+    private score: ScoreService
   ) {}
 
   async ngOnInit() {
-    await this.settings.loadScore();
+    await this.score.loadScore();
     this.loading = true;
     this.character.loadCharacters().subscribe(() => this.loadTriviaQuestion());
   }
@@ -44,7 +44,7 @@ export class TriviaPage implements OnInit {
     this.selectedOption = idx;
     if (this.isCorrectAnswer(character)) {
       this.state = 'Correct';
-      await this.settings.incrementScore();
+      await this.score.incrementScore();
     } else {
       this.state = 'Incorrect';
     }

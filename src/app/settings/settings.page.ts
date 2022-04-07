@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthenticationService } from '../core/authentication.service';
-import { SettingsService } from '../core/settings.service';
+import { ScoreService } from '../core/score.service';
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +12,7 @@ export class SettingsPage implements OnInit {
   constructor(
     private auth: AuthenticationService,
     private nav: NavController,
-    private settings: SettingsService
+    private settings: ScoreService
   ) {}
 
   ngOnInit() {}
