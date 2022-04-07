@@ -7,7 +7,6 @@ import { AuthenticationService } from './authentication.service';
 })
 export class ScoreService {
   score = 0;
-  private scoreKey = 'score';
 
   constructor(private auth: AuthenticationService) {}
 
