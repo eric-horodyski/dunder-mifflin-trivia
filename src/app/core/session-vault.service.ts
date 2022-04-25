@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import {
   BrowserVault,
+  Device,
   IdentityVaultConfig,
   Vault,
   VaultType,
@@ -23,6 +24,10 @@ export class SessionVaultService {
       ? new Vault(config)
       : new BrowserVault(config);
     this.initializeVault();
+  }
+
+  async isHardwareSecurityEnabled(): Promise<boolean> {
+    return await Device.isSystemPasscodeSet();
   }
 
   private async initializeVault(): Promise<void> {
