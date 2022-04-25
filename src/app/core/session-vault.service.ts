@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import {
   BrowserVault,
   Device,
+  DeviceSecurityType,
   IdentityVaultConfig,
   Vault,
   VaultType,
@@ -9,8 +10,10 @@ import {
 import { isPlatform, NavController } from '@ionic/angular';
 
 const config: IdentityVaultConfig = {
-  key: 'dunder.mifflin.trivia.session',
-  type: VaultType.InMemory,
+  key: 'dunder.mifflin.trivia',
+  type: VaultType.DeviceSecurity,
+  deviceSecurityType: DeviceSecurityType.Both,
+  unlockVaultOnLoad: false,
   lockAfterBackgrounded: 5000,
   shouldClearVaultAfterTooManyFailedAttempts: true,
 };
@@ -24,10 +27,6 @@ export class SessionVaultService {
       ? new Vault(config)
       : new BrowserVault(config);
     this.initializeVault();
-  }
-
-  async isHardwareSecurityEnabled(): Promise<boolean> {
-    return await Device.isSystemPasscodeSet();
   }
 
   private async initializeVault(): Promise<void> {

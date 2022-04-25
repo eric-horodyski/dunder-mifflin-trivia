@@ -6,15 +6,6 @@
         <ion-card-subtitle class="ion-text-center">Welcome to Dunder Mifflin Trivia!</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <ion-list>
-          <ion-item lines="none">
-            <ion-label>Remember Me</ion-label>
-            <ion-toggle 
-              color="primary"
-              [disabled]="!canBeRemembered"
-            ></ion-toggle>
-          </ion-item>
-        </ion-list>
         <ion-button size="large" expand="block" (click)="login()">
           <ion-icon slot="start" name="log-in-outline"></ion-icon>
           Login

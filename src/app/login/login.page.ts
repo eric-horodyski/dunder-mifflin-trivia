@@ -13,13 +13,14 @@ export class LoginPage {
 
   constructor(
     private auth: AuthenticationService,
-    private nav: NavController,
-    private sessionVault: SessionVaultService
+    private nav: NavController
   ) {}
 
   async ionViewDidEnter() {
-    console.log('ionViewDidEnter');
-    this.canBeRemembered = await this.sessionVault.isHardwareSecurityEnabled();
+    const isAuthenticated = await this.auth.isAuthenticated();
+    if (isAuthenticated) {
+      this.nav.navigateRoot(['/tabs']);
+    }
   }
 
   async login() {
