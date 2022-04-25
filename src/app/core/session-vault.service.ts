@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import {
   BrowserVault,
@@ -7,8 +6,6 @@ import {
   VaultType,
 } from '@ionic-enterprise/identity-vault';
 import { isPlatform, NavController } from '@ionic/angular';
-import { Storage } from '@capacitor/storage';
-import { BehaviorSubject } from 'rxjs';
 
 const config: IdentityVaultConfig = {
   key: 'dunder.mifflin.trivia.session',
@@ -19,20 +16,16 @@ const config: IdentityVaultConfig = {
 
 @Injectable({ providedIn: 'root' })
 export class SessionVaultService {
-  private rememberMe: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private rememberMeKey = 'remember-me';
-
   vault: Vault | BrowserVault;
-  rememberMe$ = this.rememberMe.asObservable();
 
   constructor(private nav: NavController) {
     this.vault = isPlatform('capacitor')
       ? new Vault(config)
       : new BrowserVault(config);
-    this.initializeVaultEvents();
+    this.initializeVault();
   }
 
-  private async initializeVaultEvents(): Promise<void> {
+  private async initializeVault(): Promise<void> {
     this.vault.onLock(() => this.nav.navigateRoot(['/login']));
   }
 }
