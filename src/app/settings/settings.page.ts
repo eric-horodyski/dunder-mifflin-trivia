@@ -9,13 +9,17 @@ import { ScoreService } from '../core/score.service';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
+  username: string;
+
   constructor(
     private auth: AuthenticationService,
     private nav: NavController,
     private settings: ScoreService
   ) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.username = await this.auth.getUsername();
+  }
 
   async clearScore() {
     await this.settings.clearScore();

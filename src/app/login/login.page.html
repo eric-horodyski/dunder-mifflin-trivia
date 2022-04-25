@@ -7,9 +7,9 @@
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item>
+          <ion-item lines="none">
             <ion-label>Remember Me</ion-label>
-            <ion-toggle color="primary" [(ngModel)]="rememberMe"></ion-toggle>
+            <ion-toggle color="primary" [ngModel]="rememberMe | async" (ionChange)="toggleRememberMe()"></ion-toggle>
           </ion-item>
         </ion-list>
         <ion-button size="large" expand="block" (click)="login()">
