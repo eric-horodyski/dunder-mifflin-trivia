@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { Observable } from 'rxjs';
 import { AuthenticationService } from '../core/authentication.service';
 
 @Component({
@@ -9,12 +8,14 @@ import { AuthenticationService } from '../core/authentication.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  rememberMe: Observable<boolean>;
-
   constructor(
     private auth: AuthenticationService,
     private nav: NavController
   ) {}
+
+  async ionViewDidEnter() {
+    console.log('ionViewDidEnter');
+  }
 
   async login() {
     await this.auth.login();

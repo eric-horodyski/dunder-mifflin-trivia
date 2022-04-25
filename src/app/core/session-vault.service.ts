@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import {
   BrowserVault,
   IdentityVaultConfig,
@@ -18,7 +18,7 @@ const config: IdentityVaultConfig = {
 export class SessionVaultService {
   vault: Vault | BrowserVault;
 
-  constructor(private nav: NavController) {
+  constructor(private nav: NavController, private ngZone: NgZone) {
     this.vault = isPlatform('capacitor')
       ? new Vault(config)
       : new BrowserVault(config);
@@ -26,6 +26,8 @@ export class SessionVaultService {
   }
 
   private async initializeVault(): Promise<void> {
-    this.vault.onLock(() => this.nav.navigateRoot(['/login']));
+    this.vault.onLock(() =>
+      this.ngZone.run(() => this.nav.navigateRoot(['/login']))
+    );
   }
 }
